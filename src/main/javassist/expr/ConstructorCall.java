@@ -70,4 +70,27 @@ public class ConstructorCall extends MethodCall {
     public boolean isSuper() {
         return super.isSuper();
     }
+
+    @Override
+    public int hashCode() {
+        return this.getLineNumber() +
+                this.where().hashCode() +
+                this.getClassName().hashCode() +
+                this.getMethodName().hashCode() +
+                this.getSignature().hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof ConstructorCall) {
+            ConstructorCall constructorCall = (ConstructorCall) obj;
+            return this.getLineNumber() == constructorCall.getLineNumber() &&
+                    this.where().equals(constructorCall.where()) &&
+                    this.getClassName().equals(constructorCall.getClassName()) &&
+                    this.getMethodName().equals(constructorCall.getMethodName()) &&
+                    this.getSignature().equals(constructorCall.getSignature());
+
+        }
+        return false;
+    }
 }

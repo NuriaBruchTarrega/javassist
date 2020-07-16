@@ -272,7 +272,8 @@ public class MethodCall extends Expr {
             return this.getLineNumber() == methodCall.getLineNumber() &&
                     this.where().equals(methodCall.where()) &&
                     this.getClassName().equals(methodCall.getClassName()) &&
-                    this.getMethodName().equals(methodCall.getMethodName());
+                    this.getMethodName().equals(methodCall.getMethodName()) &&
+                    this.getSignature().equals(methodCall.getSignature());
 
         }
         return false;
