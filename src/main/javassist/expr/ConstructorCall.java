@@ -89,7 +89,6 @@ public class ConstructorCall extends MethodCall {
                     this.getClassName().equals(constructorCall.getClassName()) &&
                     this.getMethodName().equals(constructorCall.getMethodName()) &&
                     this.getSignature().equals(constructorCall.getSignature());
-
         }
         return false;
     }

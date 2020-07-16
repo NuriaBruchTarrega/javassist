@@ -274,7 +274,6 @@ public class MethodCall extends Expr {
                     this.getClassName().equals(methodCall.getClassName()) &&
                     this.getMethodName().equals(methodCall.getMethodName()) &&
                     this.getSignature().equals(methodCall.getSignature());
-
         }
         return false;
     }
