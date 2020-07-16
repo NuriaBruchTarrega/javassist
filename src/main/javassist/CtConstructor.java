@@ -190,7 +190,7 @@ public final class CtConstructor extends CtBehavior {
     /**
      * Returns true if this constructor calls a constructor
      * of the super class.  This method returns false if it
-     * calls another constructor of this class by <code>this()</code>. 
+     * calls another constructor of this class by <code>this()</code>.
      */
     public boolean callsSuper() throws CannotCompileException {
         CodeAttribute codeAttr = methodInfo.getCodeAttribute();
@@ -313,7 +313,7 @@ public final class CtConstructor extends CtBehavior {
      *
      * <p>An occurrence of another constructor call <code>this()</code>
      * or a super constructor call <code>super()</code> is
-     * eliminated from the resulting method. 
+     * eliminated from the resulting method.
      *
      * <p>The immediate super class of the class declaring this constructor
      * must be also a super class of the class declaring the resulting method.
@@ -339,7 +339,7 @@ public final class CtConstructor extends CtBehavior {
      *
      * <p>An occurrence of another constructor call <code>this()</code>
      * or a super constructor call <code>super()</code> is
-     * eliminated from the resulting method. 
+     * eliminated from the resulting method.
      *
      * <p>The immediate super class of the class declaring this constructor
      * must be also a super class of the class declaring the resulting method
@@ -411,5 +411,27 @@ public final class CtConstructor extends CtBehavior {
         catch (BadBytecode e) {
             throw new CannotCompileException(e);
         }
+    }
+
+    @Override
+    public int hashCode() {
+        return this.getLongName().hashCode() +
+                this.getMethodInfo().getConstPool().hashCode() +
+                this.getMethodInfo().getDescriptor().hashCode() +
+                this.getDeclaringClass().hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof CtConstructor) {
+            CtConstructor constructor = (CtConstructor) obj;
+            return this.getLongName().equals(constructor.getLongName()) &&
+                    this.getMethodInfo().getConstPool().equals(constructor.getMethodInfo().getConstPool()) &&
+                    this.getMethodInfo().getDescriptor().equals(constructor.getMethodInfo().getDescriptor()) &&
+                    this.getMethodInfo().getAttributes().equals(constructor.getMethodInfo().getAttributes()) &&
+                    this.getDeclaringClass().equals(constructor.getDeclaringClass());
+
+        }
+        return false;
     }
 }
