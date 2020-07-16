@@ -16,12 +16,7 @@
 
 package javassist.expr;
 
-import javassist.CannotCompileException;
-import javassist.ClassPool;
-import javassist.CtBehavior;
-import javassist.CtClass;
-import javassist.CtMethod;
-import javassist.NotFoundException;
+import javassist.*;
 import javassist.bytecode.BadBytecode;
 import javassist.bytecode.Bytecode;
 import javassist.bytecode.CodeAttribute;
@@ -31,6 +26,7 @@ import javassist.bytecode.Descriptor;
 import javassist.bytecode.MethodInfo;
 import javassist.compiler.CompileError;
 import javassist.compiler.Javac;
+import javassist.compiler.MemberResolver;
 
 /**
  * Method invocation (caller-side expression).
@@ -114,7 +110,7 @@ public class MethodCall extends Expr {
     }
 
     /**
-     * Returns the name of the called method. 
+     * Returns the name of the called method.
      */
     public String getMethodName() {
         ConstPool cp = getConstPool();
@@ -259,5 +255,26 @@ public class MethodCall extends Expr {
         catch (BadBytecode e) {
             throw new CannotCompileException("broken method");
         }
+    }
+
+    @Override
+    public int hashCode() {
+        return this.getLineNumber() +
+                this.where().hashCode() +
+                this.getClassName().hashCode() +
+                this.getMethodName().hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof MethodCall) {
+            MethodCall methodCall = (MethodCall) obj;
+            return this.getLineNumber() == methodCall.getLineNumber() &&
+                    this.where().equals(methodCall.where()) &&
+                    this.getClassName().equals(methodCall.getClassName()) &&
+                    this.getMethodName().equals(methodCall.getMethodName());
+
+        }
+        return false;
     }
 }
