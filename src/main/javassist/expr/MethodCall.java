@@ -267,14 +267,13 @@ public class MethodCall extends Expr {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof MethodCall) {
-            MethodCall methodCall = (MethodCall) obj;
-            return this.getLineNumber() == methodCall.getLineNumber() &&
-                    this.where().equals(methodCall.where()) &&
-                    this.getClassName().equals(methodCall.getClassName()) &&
-                    this.getMethodName().equals(methodCall.getMethodName()) &&
-                    this.getSignature().equals(methodCall.getSignature());
-        }
-        return false;
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        MethodCall methodCall = (MethodCall) obj;
+        return this.getLineNumber() == methodCall.getLineNumber() &&
+                this.where().equals(methodCall.where()) &&
+                this.getClassName().equals(methodCall.getClassName()) &&
+                this.getMethodName().equals(methodCall.getMethodName()) &&
+                this.getSignature().equals(methodCall.getSignature());
     }
 }

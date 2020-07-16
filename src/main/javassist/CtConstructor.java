@@ -423,15 +423,13 @@ public final class CtConstructor extends CtBehavior {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof CtConstructor) {
-            CtConstructor constructor = (CtConstructor) obj;
-            return this.getLongName().equals(constructor.getLongName()) &&
-                    this.getMethodInfo().getConstPool().equals(constructor.getMethodInfo().getConstPool()) &&
-                    this.getMethodInfo().getDescriptor().equals(constructor.getMethodInfo().getDescriptor()) &&
-                    this.getMethodInfo().getAttributes().equals(constructor.getMethodInfo().getAttributes()) &&
-                    this.getDeclaringClass().equals(constructor.getDeclaringClass());
-
-        }
-        return false;
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        CtConstructor constructor = (CtConstructor) obj;
+        return this.getLongName().equals(constructor.getLongName()) &&
+                this.getMethodInfo().getConstPool().equals(constructor.getMethodInfo().getConstPool()) &&
+                this.getMethodInfo().getDescriptor().equals(constructor.getMethodInfo().getDescriptor()) &&
+                this.getMethodInfo().getAttributes().equals(constructor.getMethodInfo().getAttributes()) &&
+                this.getDeclaringClass().equals(constructor.getDeclaringClass());
     }
 }

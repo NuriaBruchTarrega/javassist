@@ -82,14 +82,13 @@ public class ConstructorCall extends MethodCall {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof ConstructorCall) {
-            ConstructorCall constructorCall = (ConstructorCall) obj;
-            return this.getLineNumber() == constructorCall.getLineNumber() &&
-                    this.where().equals(constructorCall.where()) &&
-                    this.getClassName().equals(constructorCall.getClassName()) &&
-                    this.getMethodName().equals(constructorCall.getMethodName()) &&
-                    this.getSignature().equals(constructorCall.getSignature());
-        }
-        return false;
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        ConstructorCall constructorCall = (ConstructorCall) obj;
+        return this.getLineNumber() == constructorCall.getLineNumber() &&
+                this.where().equals(constructorCall.where()) &&
+                this.getClassName().equals(constructorCall.getClassName()) &&
+                this.getMethodName().equals(constructorCall.getMethodName()) &&
+                this.getSignature().equals(constructorCall.getSignature());
     }
 }
