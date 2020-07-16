@@ -13,3 +13,4 @@ tmp/
 .settings
 TestLog.xml
 *~
+javassist.iml
