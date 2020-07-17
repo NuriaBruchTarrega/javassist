@@ -17,16 +17,11 @@
 package javassist.expr;
 
 import javassist.*;
-import javassist.bytecode.BadBytecode;
-import javassist.bytecode.Bytecode;
-import javassist.bytecode.CodeAttribute;
-import javassist.bytecode.CodeIterator;
-import javassist.bytecode.ConstPool;
-import javassist.bytecode.Descriptor;
-import javassist.bytecode.MethodInfo;
+import javassist.bytecode.*;
 import javassist.compiler.CompileError;
 import javassist.compiler.Javac;
-import javassist.compiler.MemberResolver;
+
+import java.util.Objects;
 
 /**
  * Method invocation (caller-side expression).
@@ -259,10 +254,10 @@ public class MethodCall extends Expr {
 
     @Override
     public int hashCode() {
-        return this.getLineNumber() +
-                this.where().hashCode() +
-                this.getClassName().hashCode() +
-                this.getMethodName().hashCode();
+        return Objects.hash(this.getLineNumber()) +
+                Objects.hash(this.where()) +
+                Objects.hash(this.getClassName()) +
+                Objects.hash(this.getMethodName());
     }
 
     @Override
@@ -270,10 +265,17 @@ public class MethodCall extends Expr {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
         MethodCall methodCall = (MethodCall) obj;
+
+        boolean whereEquals = (this.where() == null && methodCall.where() == null)
+                || (this.where() != null && this.where().equals(methodCall.where()));
+        boolean classNameEquals = (this.getClassName() == null && methodCall.getClassName() == null)
+                || (this.getClassName() != null && this.getClassName().equals(methodCall.getClassName()));
+        boolean signatureEquals = (this.getSignature() == null && methodCall.getSignature() == null)
+                || (this.getSignature() != null && this.getSignature().equals(methodCall.getSignature()));
+        boolean methodNameEquals = (this.getMethodName() == null && methodCall.getMethodName() == null)
+                || (this.getMethodName() != null && this.getMethodName().equals(methodCall.getMethodName()));
+
         return this.getLineNumber() == methodCall.getLineNumber() &&
-                this.where().equals(methodCall.where()) &&
-                this.getClassName().equals(methodCall.getClassName()) &&
-                this.getMethodName().equals(methodCall.getMethodName()) &&
-                this.getSignature().equals(methodCall.getSignature());
+                whereEquals && classNameEquals && signatureEquals && methodNameEquals;
     }
 }
