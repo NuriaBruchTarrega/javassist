@@ -26,6 +26,7 @@ import javassist.compiler.ast.IntConst;
 import javassist.compiler.ast.StringL;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * An instance of CtField represents a field.
@@ -1460,19 +1461,23 @@ public class CtField extends CtMember {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CtField ctField = (CtField) o;
-        return this.fieldInfo.getDescriptor().equals(ctField.fieldInfo.getDescriptor()) &&
-                this.getName().equals(ctField.getName()) &&
-                this.getDeclaringClass().equals(ctField.getDeclaringClass()) &&
-                this.getSignature().equals(ctField.getSignature()) &&
-                this.getGenericSignature().equals(ctField.getGenericSignature());
+
+        boolean genericSignatureEquals = (this.getGenericSignature() == null && ctField.getGenericSignature() == null)
+                || (this.getGenericSignature() != null && this.getGenericSignature().equals(ctField.getGenericSignature()));
+        boolean signatureEquals = (this.getSignature() == null && ctField.getSignature() == null)
+                || (this.getSignature() != null && this.getSignature().equals(ctField.getSignature()));
+        boolean nameEquals = (this.getName() == null && ctField.getName() == null)
+                || (this.getName() != null && this.getName().equals(ctField.getName()));
+
+        return this.getDeclaringClass().equals(ctField.getDeclaringClass()) &&
+                genericSignatureEquals && signatureEquals && nameEquals;
     }
 
     @Override
     public int hashCode() {
-        return this.fieldInfo.getDescriptor().hashCode() +
-                this.getName().hashCode() +
-                this.getDeclaringClass().hashCode() +
-                this.getSignature().hashCode() +
-                this.getGenericSignature().hashCode();
+        return Objects.hash(this.getName()) +
+                Objects.hash(this.getDeclaringClass()) +
+                Objects.hash(this.getSignature()) +
+                Objects.hash(this.getGenericSignature());
     }
 }
