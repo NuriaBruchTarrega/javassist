@@ -16,15 +16,7 @@
 
 package javassist;
 
-import javassist.bytecode.BadBytecode;
-import javassist.bytecode.Bytecode;
-import javassist.bytecode.ClassFile;
-import javassist.bytecode.CodeAttribute;
-import javassist.bytecode.CodeIterator;
-import javassist.bytecode.ConstPool;
-import javassist.bytecode.Descriptor;
-import javassist.bytecode.MethodInfo;
-import javassist.bytecode.Opcode;
+import javassist.bytecode.*;
 import javassist.compiler.CompileError;
 import javassist.compiler.Javac;
 
@@ -416,8 +408,8 @@ public final class CtConstructor extends CtBehavior {
     @Override
     public int hashCode() {
         return this.getLongName().hashCode() +
-                this.getMethodInfo().getConstPool().hashCode() +
-                this.getMethodInfo().getDescriptor().hashCode() +
+                this.getMethodInfo2().getConstPool().hashCode() +
+                this.getMethodInfo2().getDescriptor().hashCode() +
                 this.getDeclaringClass().hashCode();
     }
 
@@ -427,9 +419,9 @@ public final class CtConstructor extends CtBehavior {
         if (obj == null || getClass() != obj.getClass()) return false;
         CtConstructor constructor = (CtConstructor) obj;
         return this.getLongName().equals(constructor.getLongName()) &&
-                this.getMethodInfo().getConstPool().equals(constructor.getMethodInfo().getConstPool()) &&
-                this.getMethodInfo().getDescriptor().equals(constructor.getMethodInfo().getDescriptor()) &&
-                this.getMethodInfo().getAttributes().equals(constructor.getMethodInfo().getAttributes()) &&
+                this.getMethodInfo2().getConstPool().equals(constructor.getMethodInfo2().getConstPool()) &&
+                this.getMethodInfo2().getDescriptor().equals(constructor.getMethodInfo2().getDescriptor()) &&
+                this.getMethodInfo2().getAttributes().equals(constructor.getMethodInfo2().getAttributes()) &&
                 this.getDeclaringClass().equals(constructor.getDeclaringClass());
     }
 }
