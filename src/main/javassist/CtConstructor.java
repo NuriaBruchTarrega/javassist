@@ -20,6 +20,8 @@ import javassist.bytecode.*;
 import javassist.compiler.CompileError;
 import javassist.compiler.Javac;
 
+import java.util.Objects;
+
 /**
  * An instance of CtConstructor represents a constructor.
  * It may represent a static constructor
@@ -407,10 +409,10 @@ public final class CtConstructor extends CtBehavior {
 
     @Override
     public int hashCode() {
-        return this.getLongName().hashCode() +
-                this.getMethodInfo2().getConstPool().hashCode() +
-                this.getMethodInfo2().getDescriptor().hashCode() +
-                this.getDeclaringClass().hashCode();
+        return Objects.hash(this.getLongName()) +
+                Objects.hash(this.getMethodInfo2().getConstPool()) +
+                Objects.hash(this.getMethodInfo2().getDescriptor()) +
+                Objects.hash(this.getDeclaringClass());
     }
 
     @Override
@@ -418,10 +420,14 @@ public final class CtConstructor extends CtBehavior {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
         CtConstructor constructor = (CtConstructor) obj;
+
+        boolean attributeEquals = (this.getMethodInfo2().getAttributes() == null && constructor.getMethodInfo2().getAttributes() == null)
+                || (this.getMethodInfo2().getAttributes() != null && this.getMethodInfo2().getAttributes().equals(constructor.getMethodInfo2().getAttributes()));
+
         return this.getLongName().equals(constructor.getLongName()) &&
                 this.getMethodInfo2().getConstPool().equals(constructor.getMethodInfo2().getConstPool()) &&
                 this.getMethodInfo2().getDescriptor().equals(constructor.getMethodInfo2().getDescriptor()) &&
-                this.getMethodInfo2().getAttributes().equals(constructor.getMethodInfo2().getAttributes()) &&
-                this.getDeclaringClass().equals(constructor.getDeclaringClass());
+                this.getDeclaringClass().equals(constructor.getDeclaringClass()) &&
+                attributeEquals;
     }
 }
