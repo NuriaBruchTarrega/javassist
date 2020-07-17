@@ -23,6 +23,8 @@ import javassist.NotFoundException;
 import javassist.bytecode.CodeIterator;
 import javassist.bytecode.MethodInfo;
 
+import java.util.Objects;
+
 /**
  * Constructor call such as <code>this()</code> and <code>super()</code>
  * within a constructor body.
@@ -74,10 +76,10 @@ public class ConstructorCall extends MethodCall {
     @Override
     public int hashCode() {
         return this.getLineNumber() +
-                this.where().hashCode() +
-                this.getClassName().hashCode() +
-                this.getMethodName().hashCode() +
-                this.getSignature().hashCode();
+                Objects.hash(this.where()) +
+                Objects.hash(this.getClassName()) +
+                Objects.hash(this.getMethodName()) +
+                Objects.hash(this.getSignature());
     }
 
     @Override
@@ -85,10 +87,17 @@ public class ConstructorCall extends MethodCall {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
         ConstructorCall constructorCall = (ConstructorCall) obj;
+
+        boolean whereEquals = (this.where() == null && constructorCall.where() == null)
+                || (this.where() != null && this.where().equals(constructorCall.where()));
+        boolean classNameEquals = (this.getClassName() == null && constructorCall.getClassName() == null)
+                || (this.getClassName() != null && this.getClassName().equals(constructorCall.getClassName()));
+        boolean signatureEquals = (this.getSignature() == null && constructorCall.getSignature() == null)
+                || (this.getSignature() != null && this.getSignature().equals(constructorCall.getSignature()));
+        boolean methodNameEquals = (this.getMethodName() == null && constructorCall.getMethodName() == null)
+                || (this.getMethodName() != null && this.getMethodName().equals(constructorCall.getMethodName()));
+
         return this.getLineNumber() == constructorCall.getLineNumber() &&
-                this.where().equals(constructorCall.where()) &&
-                this.getClassName().equals(constructorCall.getClassName()) &&
-                this.getMethodName().equals(constructorCall.getMethodName()) &&
-                this.getSignature().equals(constructorCall.getSignature());
+                whereEquals && classNameEquals && methodNameEquals && signatureEquals;
     }
 }
