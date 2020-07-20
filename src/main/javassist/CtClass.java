@@ -16,22 +16,16 @@
 
 package javassist;
 
-import java.io.BufferedOutputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.net.URL;
-import java.security.ProtectionDomain;
-import java.util.Collection;
-import java.util.Objects;
-
 import javassist.bytecode.ClassFile;
 import javassist.bytecode.Descriptor;
 import javassist.bytecode.Opcode;
 import javassist.expr.ExprEditor;
+
+import java.io.*;
+import java.net.URL;
+import java.security.ProtectionDomain;
+import java.util.Collection;
+import java.util.Objects;
 
 /* Note:
  *
@@ -1697,6 +1691,6 @@ public abstract class CtClass {
 
     @Override
     public int hashCode() {
-        return Objects.hash(qualifiedName);
+        return Objects.hashCode(qualifiedName);
     }
 }

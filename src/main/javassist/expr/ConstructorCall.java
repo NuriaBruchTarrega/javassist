@@ -76,10 +76,10 @@ public class ConstructorCall extends MethodCall {
     @Override
     public int hashCode() {
         return this.getLineNumber() +
-                Objects.hash(this.where()) +
-                Objects.hash(this.getClassName()) +
-                Objects.hash(this.getMethodName()) +
-                Objects.hash(this.getSignature());
+                Objects.hashCode(this.where()) +
+                Objects.hashCode(this.getClassName()) +
+                Objects.hashCode(this.getMethodName()) +
+                Objects.hashCode(this.getSignature());
     }
 
     @Override

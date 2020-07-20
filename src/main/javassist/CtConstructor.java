@@ -409,10 +409,10 @@ public final class CtConstructor extends CtBehavior {
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.getLongName()) +
-                Objects.hash(this.getMethodInfo2().getConstPool()) +
-                Objects.hash(this.getMethodInfo2().getDescriptor()) +
-                Objects.hash(this.getDeclaringClass());
+        return Objects.hashCode(this.getLongName()) +
+                Objects.hashCode(this.getMethodInfo2().getConstPool()) +
+                Objects.hashCode(this.getMethodInfo2().getDescriptor()) +
+                Objects.hashCode(this.getDeclaringClass());
     }
 
     @Override

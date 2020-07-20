@@ -1475,9 +1475,9 @@ public class CtField extends CtMember {
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.getName()) +
-                Objects.hash(this.getDeclaringClass()) +
-                Objects.hash(this.getSignature()) +
-                Objects.hash(this.getGenericSignature());
+        return Objects.hashCode(this.getName()) +
+                Objects.hashCode(this.getDeclaringClass()) +
+                Objects.hashCode(this.getSignature()) +
+                Objects.hashCode(this.getGenericSignature());
     }
 }

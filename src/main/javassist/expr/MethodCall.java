@@ -254,10 +254,10 @@ public class MethodCall extends Expr {
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.getLineNumber()) +
-                Objects.hash(this.where()) +
-                Objects.hash(this.getClassName()) +
-                Objects.hash(this.getMethodName());
+        return Objects.hashCode(this.getLineNumber()) +
+                Objects.hashCode(this.where()) +
+                Objects.hashCode(this.getClassName()) +
+                Objects.hashCode(this.getMethodName());
     }
 
     @Override
