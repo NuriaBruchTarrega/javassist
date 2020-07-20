@@ -255,6 +255,7 @@ public class MethodCall extends Expr {
     @Override
     public int hashCode() {
         return Objects.hashCode(this.getLineNumber()) +
+                Objects.hashCode(this.currentPos) +
                 Objects.hashCode(this.where()) +
                 Objects.hashCode(this.getClassName()) +
                 Objects.hashCode(this.getMethodName());
@@ -275,7 +276,7 @@ public class MethodCall extends Expr {
         boolean methodNameEquals = (this.getMethodName() == null && methodCall.getMethodName() == null)
                 || (this.getMethodName() != null && this.getMethodName().equals(methodCall.getMethodName()));
 
-        return this.getLineNumber() == methodCall.getLineNumber() &&
+        return this.getLineNumber() == methodCall.getLineNumber() && this.currentPos == methodCall.currentPos &&
                 whereEquals && classNameEquals && signatureEquals && methodNameEquals;
     }
 }

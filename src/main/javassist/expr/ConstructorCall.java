@@ -75,7 +75,8 @@ public class ConstructorCall extends MethodCall {
 
     @Override
     public int hashCode() {
-        return this.getLineNumber() +
+        return Objects.hashCode(this.getLineNumber()) +
+                Objects.hashCode(this.currentPos) +
                 Objects.hashCode(this.where()) +
                 Objects.hashCode(this.getClassName()) +
                 Objects.hashCode(this.getMethodName()) +
@@ -97,7 +98,7 @@ public class ConstructorCall extends MethodCall {
         boolean methodNameEquals = (this.getMethodName() == null && constructorCall.getMethodName() == null)
                 || (this.getMethodName() != null && this.getMethodName().equals(constructorCall.getMethodName()));
 
-        return this.getLineNumber() == constructorCall.getLineNumber() &&
+        return this.getLineNumber() == constructorCall.getLineNumber() && this.currentPos == constructorCall.currentPos &
                 whereEquals && classNameEquals && methodNameEquals && signatureEquals;
     }
 }
