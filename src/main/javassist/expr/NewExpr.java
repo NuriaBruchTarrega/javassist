@@ -16,26 +16,12 @@
 
 package javassist.expr;
 
-import javassist.CannotCompileException;
-import javassist.ClassPool;
-import javassist.CtBehavior;
-import javassist.CtClass;
-import javassist.CtConstructor;
-import javassist.NotFoundException;
-import javassist.bytecode.BadBytecode;
-import javassist.bytecode.Bytecode;
-import javassist.bytecode.CodeAttribute;
-import javassist.bytecode.CodeIterator;
-import javassist.bytecode.ConstPool;
-import javassist.bytecode.Descriptor;
-import javassist.bytecode.MethodInfo;
-import javassist.bytecode.Opcode;
-import javassist.compiler.CompileError;
-import javassist.compiler.Javac;
-import javassist.compiler.JvstCodeGen;
-import javassist.compiler.JvstTypeChecker;
-import javassist.compiler.ProceedHandler;
+import javassist.*;
+import javassist.bytecode.*;
+import javassist.compiler.*;
 import javassist.compiler.ast.ASTList;
+
+import java.util.Objects;
 
 /**
  * Object creation (<code>new</code> expression).
@@ -56,7 +42,7 @@ public class NewExpr extends Expr {
 
     /*
      * Not used
-     * 
+     *
     private int getNameAndType(ConstPool cp) {
         int pos = currentPos;
         int c = iterator.byteAt(pos);
@@ -268,5 +254,28 @@ public class NewExpr extends Expr {
             c.atMethodCallCore(newType, MethodInfo.nameInit, args);
             c.setType(newType);
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        NewExpr newExpr = (NewExpr) o;
+        boolean whereEquals = (this.where() == null && newExpr.where() == null)
+                || (this.where() != null && this.where().equals(newExpr.where()));
+        return newPos == newExpr.newPos && whereEquals && this.currentPos == newExpr.currentPos &&
+                Objects.equals(newTypeName, newExpr.newTypeName) &&
+                Objects.equals(this.getClassName(), newExpr.getClassName()) &&
+                Objects.equals(this.getSignature(), newExpr.getSignature());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(newTypeName) +
+                Objects.hashCode(newPos) +
+                Objects.hashCode(this.where()) +
+                Objects.hashCode(this.currentPos) +
+                Objects.hashCode(this.getClassName()) +
+                Objects.hashCode(this.getSignature());
     }
 }
