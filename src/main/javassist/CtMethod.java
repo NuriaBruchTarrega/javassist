@@ -16,15 +16,9 @@
 
 package javassist;
 
-import javassist.bytecode.AccessFlag;
-import javassist.bytecode.BadBytecode;
-import javassist.bytecode.Bytecode;
-import javassist.bytecode.CodeAttribute;
-import javassist.bytecode.CodeIterator;
-import javassist.bytecode.ConstPool;
-import javassist.bytecode.Descriptor;
-import javassist.bytecode.MethodInfo;
-import javassist.bytecode.Opcode;
+import javassist.bytecode.*;
+
+import java.util.Objects;
 
 /**
  * An instance of <code>CtMethod</code> represents a method.
@@ -130,7 +124,7 @@ public final class CtMethod extends CtBehavior {
      * <code>CtNewMethod</code>.  See it for more details.
      * <code>CtNewMethod</code> has a number of useful factory methods.
      *
-     * @param src               the source text. 
+     * @param src               the source text.
      * @param declaring    the class to which the created method is added.
      * @see CtNewMethod#make(String, CtClass)
      */
@@ -165,7 +159,8 @@ public final class CtMethod extends CtBehavior {
      */
     @Override
     public int hashCode() {
-        return getStringRep().hashCode();
+        return getStringRep().hashCode()
+                + Objects.hashCode(getDeclaringClass());
     }
 
     /**
@@ -177,7 +172,7 @@ public final class CtMethod extends CtBehavior {
         cachedStringRep = null;
     }
 
-    /* This method is also called by CtClassType.getMethods0(). 
+    /* This method is also called by CtClassType.getMethods0().
      */
     final String getStringRep() {
         if (cachedStringRep == null)
@@ -194,7 +189,8 @@ public final class CtMethod extends CtBehavior {
     @Override
     public boolean equals(Object obj) {
         return obj != null && obj instanceof CtMethod
-               && ((CtMethod)obj).getStringRep().equals(getStringRep());
+               && ((CtMethod)obj).getStringRep().equals(getStringRep())
+                && ((CtMethod)obj).getDeclaringClass().equals(getDeclaringClass());
     }
 
     /**
